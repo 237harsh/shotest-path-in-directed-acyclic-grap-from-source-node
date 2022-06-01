@@ -1,0 +1,85 @@
+
+#include <bits/stdc++.h>
+
+
+using namespace std;
+void dfs(int i,vector<int>&vis,stack<int>&s,vector<pair<int,int>>adj[])
+{
+    vis[i]=1;
+    for(auto x:adj[i])
+    {
+        if(!vis[x.first])
+        {
+            dfs(x.first,vis,s,adj);
+        }
+    }
+    s.push(i);
+    return ;
+}
+int main()
+{
+    int n,m,i,j;
+    cin>>n>>m;
+   vector<pair<int,int>>adj[n];
+   for(i=0;i<m;i++)
+   {
+       int u,v,w;
+       cin>>u>>v>>w;
+       adj[u].push_back({v,w});
+   }
+   
+   for(i=0;i<n;i++)
+   {
+       for(j=0;j<adj[i].size();j++)
+       {
+           cout<<adj[i][j].first<< " "<<adj[i][j].second<<" ";
+       }
+       cout<<"\n";
+   }
+
+vector<int>vis(n,0);
+stack<int>s;
+for(int i=0;i<n;i++)
+{
+    if(!vis[i])
+    {
+        dfs(i,vis,s,adj);
+    }
+}
+/*
+while(!s.empty())
+{
+    int a=s.top();
+    s.pop();
+    printf("%d ",a);
+}
+*/
+vector<int>dis(n,INT_MAX);
+int src=s.top();
+vector<int>vi(n,0);
+dis[src]=0;
+while(!s.empty())
+{
+    int a=s.top();
+    s.pop();
+    for(auto x:adj[a])
+    { 
+      
+        if(dis[x.first]!=INT_MAX)
+        {
+            if(dis[a]+dis[x.second]<dis[x.first])
+            {
+              dis[x.first]=  dis[a]+x.second;
+            }
+           
+        }
+        else
+        {
+         dis[x.first]=  dis[a]+x.second;   
+        }
+    }
+}
+for(int i=0;i<n;i++)
+printf("%d ",dis[i]);
+    return 0;
+}
