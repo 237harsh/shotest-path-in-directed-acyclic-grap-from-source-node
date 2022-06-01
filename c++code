@@ -67,7 +67,7 @@ while(!s.empty())
       
         if(dis[x.first]!=INT_MAX)
         {
-            if(dis[a]+dis[x.second]<dis[x.first])
+            if(dis[a]+x.second<dis[x.first])
             {
               dis[x.first]=  dis[a]+x.second;
             }
